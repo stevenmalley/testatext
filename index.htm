@@ -11,9 +11,21 @@
     <link rel="stylesheet" href="styles.css">
     <script src="utilities.js" defer></script>
     <script src="memorisation.js" defer></script>
+    <script src="poemSearch.js" defer></script>
   </head>
   <body>
     <main>
+      <div id="poemSearchWindow">
+        <div id="poemSearchInputs">
+          <input type="text" id="poemSearch-author" name="author" placeholder="author" />
+          <input type="text" id="poemSearch-title" name="title" placeholder="title" />
+        </div>
+        <div id="poemSearchControls">
+          <button id="poemSearch">Search</button>
+          <button id="poemSearchClose">Cancel</button>
+        </div>
+        <div id="poemSearchResults"></div>
+      </div>
       <div id="textInputSection">
         <div id="localTextContainer">
           <div id="localTextsInfo">These texts are saved on your device.</div>
@@ -22,8 +34,10 @@
         <textarea id="textInput" maxlength="5000" placeholder="Put the text that you want to memorise here" autofocus></textarea>
         <div id="charactersRemaining"></div>
         <div id="inputControls">
-          <button id="textInputSubmit">Memorise</button>
+          <button id="activatePoemSearch">Poem Search</button>
+          <button id="clearText">Clear Text</button>
           <button id="textLocalSave">Save Text</button>
+          <button id="textInputSubmit">Memorise</button>
         </div>
       </div>
       <div id="memorisationSection">
