@@ -1,5 +1,11 @@
 let textData = [];
 
+function hideLinesAfter(id) {
+  textData.forEach(line => {
+    if (line.id > id) line.hideLine();
+  });
+}
+
 class LineData {
   static latestID = 0; // Stores count of number of instances created
   
@@ -9,6 +15,22 @@ class LineData {
     this.revealedText = create("span", {className:"textSpan"}, this.p);
     this.hiddenText = create("span", {className:"textSpan hidden", textContent:string}, this.p);
     this.exposed = false; // has the whole p element been revealed (exposed once the span element is empty)
+
+    this.p.addEventListener("click", () => {
+      let selection = window.getSelection();
+      let range = selection.getRangeAt(0);
+      let character = range.startOffset;
+      if (this.revealedText.textContent.length > character) {
+        while (character > 0 && this.revealedText.textContent[character-1] !== " ") {
+          character--;
+        }
+        this.hiddenText.textContent = this.revealedText.textContent.slice(character) + this.hiddenText.textContent;
+        this.revealedText.textContent = this.revealedText.textContent.slice(0,character);
+        this.exposed = false;
+        this.p.classList.add("hidden");
+      }
+      hideLinesAfter(this.id);
+    });
   }
 
   revealCharacter() {
@@ -80,8 +102,6 @@ class LineData {
 
 
 
-
-elid("textInput").oninput = setCharactersRemaining;
 
 function setCharactersRemaining() {
   let remaining = 5000 - elid("textInput").value.length;
@@ -203,14 +223,21 @@ function deleteLocalText(i) {
   createSavedTextButtons();
 }
 
+function clearText() {
+  elid("textInput").value = "";
+  setCharactersRemaining();
+}
+
 
 const trashSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
   <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
 </svg>`;
 
 
+elid("textInput").oninput = setCharactersRemaining;
 elid("textInputSubmit").onclick = memorise;
 elid("textLocalSave").onclick = localSave;
+elid("clearText").onclick = clearText;
 
 elid("resetText").onclick = reset;
 elid("editText").onclick = edit;
