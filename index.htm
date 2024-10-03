@@ -16,14 +16,23 @@
   <body>
     <main>
       <div id="poemSearchWindow">
-        <div id="poemSearchInputs">
-          <input type="text" id="poemSearch-author" name="author" placeholder="author" />
-          <input type="text" id="poemSearch-title" name="title" placeholder="title" />
-        </div>
-        <div id="poemSearchControls">
-          <button id="poemSearch">Search</button>
-          <button id="poemSearchClose">Cancel</button>
-        </div>
+        <form onsubmit="poetrySearch(event)">
+          <div id="poemSearchInputs">
+            <div>
+              <input type="text" id="poemSearch-author" name="author" placeholder="author" />
+              <label for="poemSearch-author">author</label>
+            </div>
+            <div>
+              <input type="text" id="poemSearch-title" name="title" placeholder="title" />
+              <label for="poemSearch-title">title</label>
+            </div>
+          </div>
+          <div id="poemSearchControls">
+            <div id="poemSearchInfo">Search PoetryDB.org for poems.</div>
+            <button id="poemSearch" type="submit">Search</button>
+            <button id="poemSearchClose" type="button">Cancel</button>
+          </div>
+        </form>
         <div id="poemSearchResults"></div>
       </div>
       <div id="textInputSection">
@@ -37,7 +46,7 @@
           <button id="activatePoemSearch">Poem Search</button>
           <button id="clearText">Clear Text</button>
           <button id="textLocalSave">Save Text</button>
-          <button id="textInputSubmit">Memorise</button>
+          <button id="textInputSubmit">BEGIN</button>
         </div>
       </div>
       <div id="memorisationSection">

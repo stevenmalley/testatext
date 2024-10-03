@@ -26,20 +26,42 @@ main {
   padding: 1%;
 }
 
+#poemSearchInputs div {
+  margin: 10px 2px;
+}
+
 #poemSearchInputs input {
-  padding: 10px 4px;
+  padding: 1.4rem 0.75rem 0.6rem;
   border-radius: 10px;
   border-width: 1px;
-  margin: 10px 2px;
   display: block;
   width: 80%;
   max-width: 400px;
 }
 
-#poemSearchResults button {
+#poemSearchInputs input::placeholder {
+  display: none;
+  visibility: hidden;
+}
+
+#poemSearchInputs label {
   display: block;
-  margin: 3px 0;
-  padding: 3px;
+  color: #999;
+  transform: translate(0.5rem, -2rem);
+  transition: all 0.2s ease-out;
+}
+
+#poemSearchInputs input:focus + label,
+#poemSearchInputs input:not(:placeholder-shown) + label  {
+  color: #555;
+  transform: scale(0.9, 0.9) translate(-2rem, -3.3rem);
+}
+
+#poemSearchResults button {
+  font-size: 1.3em;
+  display: block;
+  margin: 6px 0;
+  padding: 10px;
   border: 1px solid #aaa;
   border-radius: 5px;
   background: linear-gradient(white, rgb(255, 255, 217));
@@ -47,6 +69,7 @@ main {
 #poemSearchResults button:hover {
   background: linear-gradient(rgb(255, 255, 232), rgb(255, 249, 162));
 }
+
 
 
 
@@ -63,7 +86,11 @@ main {
 
 #localTextsInfo {
   display: none;
+}
+
+#localTextsInfo, #poemSearchInfo {
   color: #666;
+  margin-bottom: 10px;
 }
 
 #localTexts div {
@@ -128,6 +155,7 @@ main {
   font-size: 20px;
   color: var(--primaryColor);
   cursor: pointer;
+  user-select: none;
 }
 
 .textLine {

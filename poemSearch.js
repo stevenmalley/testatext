@@ -3,7 +3,9 @@ function closePoemSearchWindow() {
 }
 
 
-async function poetrySearch() {
+async function poetrySearch(e) {
+  e.preventDefault();
+
   elid("poemSearchResults").textContent = "searching...";
 
 
