@@ -28,6 +28,7 @@ main {
 
 #poemSearchInputs div {
   margin: 10px 2px;
+  height: 4rem;
 }
 
 #poemSearchInputs input {
@@ -49,12 +50,18 @@ main {
   color: #999;
   transform: translate(0.5rem, -2rem);
   transition: all 0.2s ease-out;
+  cursor: text;
 }
 
 #poemSearchInputs input:focus + label,
 #poemSearchInputs input:not(:placeholder-shown) + label  {
   color: #555;
-  transform: scale(0.9, 0.9) translate(-2rem, -3.3rem);
+  font-size: 0.9em;
+  transform: translate(0.75rem, -2.9rem);
+}
+
+#poemSearchResults {
+  padding-top: 15px;
 }
 
 #poemSearchResults button {
@@ -65,6 +72,8 @@ main {
   border: 1px solid #aaa;
   border-radius: 5px;
   background: linear-gradient(white, rgb(255, 255, 217));
+  text-align: left;
+  max-width: min(90vw, 500px);
 }
 #poemSearchResults button:hover {
   background: linear-gradient(rgb(255, 255, 232), rgb(255, 249, 162));
@@ -88,7 +97,7 @@ main {
   display: none;
 }
 
-#localTextsInfo, #poemSearchInfo {
+.info {
   color: #666;
   margin-bottom: 10px;
 }
@@ -155,7 +164,6 @@ main {
   font-size: 20px;
   color: var(--primaryColor);
   cursor: pointer;
-  user-select: none;
 }
 
 .textLine {
@@ -167,6 +175,10 @@ main {
 .textSpan {
   background-color: white;
   line-height: 23px;
+}
+
+.textSpan.hidden {
+  user-select: none;
 }
 
 .textLine.hidden, .textSpan.hidden {

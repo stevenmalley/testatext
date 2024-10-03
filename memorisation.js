@@ -1,11 +1,5 @@
 let textData = [];
 
-function hideLinesAfter(id) {
-  textData.forEach(line => {
-    if (line.id > id) line.hideLine();
-  });
-}
-
 class LineData {
   static latestID = 0; // Stores count of number of instances created
   
@@ -16,19 +10,16 @@ class LineData {
     this.hiddenText = create("span", {className:"textSpan hidden", textContent:string}, this.p);
     this.exposed = false; // has the whole p element been revealed (exposed once the span element is empty)
 
-    this.p.addEventListener("click", () => {
+    this.revealedText.addEventListener("click", () => {
       let selection = window.getSelection();
-      let range = selection.getRangeAt(0);
-      let character = range.startOffset;
-      if (this.revealedText.textContent.length > character) {
-        while (character > 0 && this.revealedText.textContent[character-1] !== " ") {
-          character--;
-        }
-        this.hiddenText.textContent = this.revealedText.textContent.slice(character) + this.hiddenText.textContent;
-        this.revealedText.textContent = this.revealedText.textContent.slice(0,character);
-        this.exposed = false;
-        this.p.classList.add("hidden");
+      let character = selection.anchorOffset;
+      while (character > 0 && this.revealedText.textContent[character-1] !== " ") {
+        character--;
       }
+      this.hiddenText.textContent = this.revealedText.textContent.slice(character) + this.hiddenText.textContent;
+      this.revealedText.textContent = this.revealedText.textContent.slice(0,character);
+      this.exposed = false;
+      this.p.classList.add("hidden");
       hideLinesAfter(this.id);
     });
   }
@@ -97,6 +88,12 @@ class LineData {
       }
     }
   }
+}
+
+function hideLinesAfter(id) {
+  textData.forEach(line => {
+    if (line.id > id) line.hideLine();
+  });
 }
 
 

@@ -57,7 +57,7 @@ function createPoemButtons(poemResults) {
 
   poemResults.forEach(poem => {
     let poemButton = create("button", {
-      textContent: poem.title + ", ",
+      textContent: poem.title,
       className: "loadPoemButton",
       onclick: () => {
         elid("textInput").value = poem.lines.join("\n");
@@ -66,7 +66,7 @@ function createPoemButtons(poemResults) {
       }
     }, results);
 
-    create("strong", {textContent: poem.author}, poemButton);
+    create("strong", {textContent: " "+poem.author}, poemButton);
   });
 }
 
