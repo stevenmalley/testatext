@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>TestaText</title>
+    <meta name="description" content="a tool for memorising pieces of text: test yourself and reveal the text bit by bit">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="utilities.js" defer></script>
+    <script src="memorisation.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <div id="textInputSection">
+        <div id="localTextContainer">
+          <div id="localTextsInfo">These texts are saved on your device.</div>
+          <div id="localTexts"></div>
+        </div>
+        <textarea id="textInput" maxlength="5000" placeholder="Put the text that you want to memorise here" autofocus></textarea>
+        <div id="charactersRemaining"></div>
+        <div id="inputControls">
+          <button id="textInputSubmit">Memorise</button>
+          <button id="textLocalSave">Save Text</button>
+        </div>
+      </div>
+      <div id="memorisationSection">
+        <div id="textDisplay"></div>
+        <div id="bottomBar">
+          <div id="memorisationControls">
+            <div id="displayControls">
+              <button id="editText">Edit<br /><span class="keyShortcut">(E)</span></button>
+              <button id="resetText">Reset<br /><span class="keyShortcut">(R)</span></button>
+            </div>
+            <div id="revealControls">
+              <button id="revealLetter">Letter<br /><span class="keyShortcut">(Z)</span></button>
+              <button id="revealWord">Word<br /><span class="keyShortcut">(X)</span></button>
+              <button id="revealLine">Line<br /><span class="keyShortcut">(C)</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,197 @@
+:root {
+  --primaryColor: #112966;
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+
+
+
+/* TEXT INPUT SECTION */
+
+#textInputSection {
+  padding-top: 10px;
+}
+
+#localTextsInfo {
+  display: none;
+  color: #666;
+}
+
+#localTexts div {
+  margin: 10px 0;
+}
+
+#localTexts div button {
+  display: inline-block;
+  border: 1px solid #aaa;
+  height: 30px;
+  line-height: 30px;
+}
+
+#localTexts div button.deleteButton {
+  background: white;
+  color: red;
+  margin-right: 5px;
+  border-radius: 50%;
+  width: 30px;
+  vertical-align: top;
+  line-height: 33px;
+}
+#localTexts div button.deleteButton:hover {
+  background: red;
+  color: white;
+}
+
+#localTexts div button.loadButton {
+  border-radius: 5px;
+  background: linear-gradient(white, rgb(255, 255, 217));
+  overflow: hidden;
+  max-width: 240px;
+  line-break: auto;
+  text-align: left;
+}
+#localTexts div button.loadButton:hover {
+  background: linear-gradient(rgb(255, 255, 232), rgb(255, 249, 162));
+}
+
+#textInput {
+  display: block;
+  width: 100%;
+  max-width: 600px;
+  height: 300px;
+  box-sizing: border-box;
+  background-color: rgb(255, 255, 232);
+}
+
+#charactersRemaining {
+  color: red;
+}
+
+
+
+/* MEMORISATION SECTION */
+
+#memorisationSection {
+  display: none;
+}
+
+#textDisplay {
+  font-size: 20px;
+  color: var(--primaryColor);
+}
+
+.textLine {
+  margin: 1px 0;
+  background-color: white;
+  line-height: 23px;
+}
+
+.textSpan {
+  background-color: white;
+  line-height: 23px;
+}
+
+.textLine.hidden, .textSpan.hidden {
+  background-color: var(--primaryColor);
+}
+
+.textLine, .textSpan {
+  transition: background-color 0.3s;
+}
+
+#bottomBar {
+  position: sticky;
+  bottom: 0;
+  background-color: white;
+  padding: 4px 0;
+}
+
+
+
+/* BUTTONS */
+
+#inputControls {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+#memorisationControls {
+  display: flex;
+  flex-direction: row;
+}
+
+#displayControls, #revealControls {
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+#displayControls {
+  flex-grow: 1;
+}
+#revealControls {
+  flex-grow: 2;
+}
+
+#inputControls button, #displayControls button {
+  color: white;
+  background-color: var(--primaryColor);
+  border-radius: 10px;
+  border: 6px solid #071025;
+  font-size: 1.2em;
+  font-family: math;
+  font-weight: bold;
+  height: 55px;
+  transition: background-color 0.2s;
+}
+#inputControls button:hover, #displayControls button:hover {
+  background-color: #0d204d;
+}
+
+#revealControls button {
+  background-color: #ffbb45;
+  border-radius: 10px;
+  border: 3px solid #a76a00;
+  font-size: 1.2em;
+  font-family: math;
+  font-weight: bold;
+  height: 55px;
+  transition: background-color 0.2s;
+  width: 20vw;
+  max-width: 100px;
+}
+#revealControls button:hover {
+  background-color: #d38600;
+}
+#revealControls button.activatedButton {
+  background-color: rgb(250, 212, 147);
+}
+
+
+@media screen and (max-width: 400px) {
+  #inputControls button, #revealControls button, #displayControls button {
+    font-size: 0.9em;
+  }
+}
+@media screen and (max-width: 320px) {
+  #revealControls button {
+    width: auto;
+  }
+}
+@media screen and (max-width: 799px) {
+  .keyShortcut {
+    display: none;
+  }
+}
