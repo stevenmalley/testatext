@@ -185,11 +185,9 @@ class LineData {
   scrollIntoView() {
     let rect = this.p.getBoundingClientRect();
     if (rect.top < 0) {
-      console.log("scrolling up: "+rect.top);
       scroll(window.scrollX, (window.scrollY-5) + rect.top);
     } else {
       let bottomBarTop = elid("bottomBar").getBoundingClientRect().top;
-      console.log("scrolling down: "+rect.bottom+", "+bottomBarTop);
       if (bottomBarTop < rect.bottom) {
         scroll(window.scrollX, (window.scrollY+5) + (rect.bottom-bottomBarTop));
       }
