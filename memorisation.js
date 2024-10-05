@@ -7,13 +7,17 @@ class LineData {
     this.id = ++LineData.latestID;
     this.p = create("p", {id:"textLine"+this.id, className:"textLine hidden"}, "textDisplay");
     this.revealedText = create("span", {className:"textSpan"}, this.p);
-    this.hiddenText = create("span", {className:"textSpan hidden", textContent:string}, this.p);
+    this.hiddenText = create("span", {textContent:string}, this.p);
     this.exposed = false; // has the whole p element been revealed (exposed once the span element is empty)
 
+    this.hiddenWordSpans();
+
+    // on clicking a revealed word, hide it and all subsequent words
     this.revealedText.addEventListener("click", () => {
       let selection = window.getSelection();
       let character = selection.anchorOffset;
       while (character > 0 && this.revealedText.textContent[character-1] !== " ") {
+        // reverse to the previous space (or beginning of line) to capture the whole word
         character--;
       }
       this.hiddenText.textContent = this.revealedText.textContent.slice(character) + this.hiddenText.textContent;
@@ -21,7 +25,108 @@ class LineData {
       this.exposed = false;
       this.p.classList.add("hidden");
       hideLinesAfter(this.id);
+      this.hiddenWordSpans();
     });
+
+    // on clicking a hidden word, reveal it and all previous words
+    this.hiddenText.addEventListener("click", e => {
+      revealLinesBefore(this.id);
+
+      const target = (e.target.classList.contains("initial")) ? e.target.parentElement : e.target;
+      if (target["data-spanCount"]) {
+        let spans = target["data-spanCount"];
+        while (spans-- > 0) {
+          this.revealedText.textContent = this.revealedText.textContent + this.hiddenText.firstChild.textContent;
+          this.hiddenText.removeChild(this.hiddenText.firstChild);
+        }
+        if (this.hiddenText.firstChild && this.hiddenText.firstChild.textContent === " ") {
+          // if the next span holds a space, reveal it as well, so that the revealedText ends with a space (so that the next hidden word span will hold an .initial span)
+          this.revealedText.textContent = this.revealedText.textContent + this.hiddenText.firstChild.textContent;
+          this.hiddenText.removeChild(this.hiddenText.firstChild);
+        }
+        this.checkLineRevealed();
+      } else {
+        this.revealLine();
+      }
+      this.hiddenWordSpans();
+      this.scrollIntoView();
+    });
+    
+    // on clicking a hidden line, reveal it and all previous lines
+    this.p.addEventListener("click", e => {
+      if (e.target.tagName === "P") { // only count clicks on the P outside of the spans
+        if (this.exposed) {
+          hideLinesAfter(this.id);
+        } else {
+          revealLinesUpTo(this.id);
+        }
+      }
+    });
+  }
+
+  checkLineRevealed() {
+    if (this.hiddenText.textContent.length === 0 || this.hiddenText.textContent.split("").every(c => c === " ")) {
+      // if there are no non-space characters left in the line, expose it
+      this.exposed = true;
+      this.p.classList.remove("hidden");
+    }
+  }
+
+  hiddenWordSpans() {
+    // for the hiddenText, put every word in a separate span with its initial in an .initial child span
+    
+    // first letter in hiddenText is initial if revealedText has no letters after its final space (or no letters at all)
+    let revealedArray = this.revealedText.textContent.split("");
+    let firstLetterIsInitial = revealedArray.findLastIndex(c => c.match(/[a-zA-Z0-9]/)) <= revealedArray.lastIndexOf(" ");
+
+    let hiddenString = this.hiddenText.textContent;
+    this.hiddenText.textContent = "";
+
+    let currentWordStart = -1;
+    let i = 0;
+    let spanCount = 0;
+    for (let c of hiddenString) {
+      if (c === " " || i === hiddenString.length-1) {
+        // reached a space or last character of the line, write the previous word
+
+        if (i === hiddenString.length-1 && c !== " ") {
+          // reached the last character of the line (and it is not a space), set word range variables
+          if (currentWordStart === -1) currentWordStart = i;
+          i++;
+        }
+
+        if (currentWordStart !== -1) {
+          // if there is a word, write it to a .hidden span
+          // include the initial in an .initial span
+          const wordSpan = create("span",{className:"textSpan hidden","data-spanCount":++spanCount},this.hiddenText);
+          let hiddenWord = hiddenString.slice(currentWordStart,i);
+          if (firstLetterIsInitial) {
+            let initialIndex = 0;
+            let firstAlphanumeric = hiddenWord.match(/[a-zA-Z1-9]/);
+            if (firstAlphanumeric) initialIndex = firstAlphanumeric.index;
+            wordSpan.appendChild(document.createTextNode(hiddenWord.slice(0,initialIndex)));
+            wordSpan.appendChild(create("span",{className:"textSpan hidden initial",textContent:hiddenWord[initialIndex]}));
+            wordSpan.appendChild(document.createTextNode(hiddenWord.slice(initialIndex+1)));
+          } else {
+            wordSpan.appendChild(document.createTextNode(hiddenWord));
+          }
+
+          // all spans after the first will have initials as first letter
+          firstLetterIsInitial = true;
+
+          // reset the starting range variable, ready to search for the next word
+          currentWordStart = -1;
+        }
+
+        // create a .space span if the character is a space
+        if (c === " ") create("span",{className:"textSpan space",textContent:" ","data-spanCount":++spanCount},this.hiddenText);
+
+      } else {
+        // if encountering the beginning of a new word, set its starting range variable
+        if (currentWordStart === -1) currentWordStart = i;
+      }
+      i++;
+    }
   }
 
   revealCharacter() {
@@ -30,10 +135,9 @@ class LineData {
     this.revealedText.textContent += c;
     this.hiddenText.textContent = this.hiddenText.textContent.slice(1);
 
-    if (this.hiddenText.textContent.length === 0) {
-      this.exposed = true;
-      this.p.classList.remove("hidden");
-    }
+    this.checkLineRevealed();
+
+    this.hiddenWordSpans();
 
     return c;
   }
@@ -45,25 +149,25 @@ class LineData {
     let letterRevealed = false; // flag set once a letter has been revealed (so that, if the next character to be revealed is special, keep going until reaching a letter)
     do {
       const c = this.revealCharacter();
-      if (c.match(/[a-zA-Z]/)) letterRevealed = true;
-    } while (!this.exposed && (!letterRevealed || !this.hiddenText.textContent[0].match(/[a-zA-Z]/)));
+      if (c.match(/[a-zA-Z0-9]/)) letterRevealed = true;
+    } while (!this.exposed && (!letterRevealed || (this.hiddenText.textContent[0] !== " " && !this.hiddenText.textContent[0].match(/[a-zA-Z0-9]/))));
+    if (!this.exposed && this.hiddenText.textContent[0] === " ") this.revealCharacter();
   }
 
   revealWord() {
-    // reveal a word (including hyphens and apostrophes) and any special characters that follow
+    // reveal a word (including any non-space special characters) and the following space
     this.scrollIntoView();
     
     let letterRevealed = false; // flag set once a letter has been revealed (so that, if the next character to be revealed is special, keep going until reaching a letter)
-    let wordRevealed = false; // flag set once the letters have ended and it has reached the special characters after the word; keep going until a letter or linebreak is reached
     do {
       const c = this.revealCharacter();
-      if (c.match(/[a-zA-Z]/)) letterRevealed = true;
-      if (this.exposed || (letterRevealed && !this.hiddenText.textContent[0].match(/[a-zA-Z-']/))) wordRevealed = true;
-    } while (!this.exposed && (!letterRevealed || !wordRevealed || !this.hiddenText.textContent[0].match(/[a-zA-Z-']/)));
+      if (c !== " ") letterRevealed = true;
+    } while (!this.exposed && (!letterRevealed || this.hiddenText.textContent[0] !== " "));
+    if (!this.exposed && this.hiddenText.textContent[0] === " ") this.revealCharacter();
   }
   
-  revealLine() {
-    this.scrollIntoView();
+  revealLine(scroll = true) {
+    if (scroll) this.scrollIntoView();
     
     while (!this.exposed) {
       this.revealCharacter();
@@ -75,14 +179,17 @@ class LineData {
     this.p.classList.add("hidden");
     this.hiddenText.textContent = this.revealedText.textContent + this.hiddenText.textContent;
     this.revealedText.textContent = "";
+    this.hiddenWordSpans();
   }
 
   scrollIntoView() {
     let rect = this.p.getBoundingClientRect();
     if (rect.top < 0) {
+      console.log("scrolling up: "+rect.top);
       scroll(window.scrollX, (window.scrollY-5) + rect.top);
     } else {
       let bottomBarTop = elid("bottomBar").getBoundingClientRect().top;
+      console.log("scrolling down: "+rect.bottom+", "+bottomBarTop);
       if (bottomBarTop < rect.bottom) {
         scroll(window.scrollX, (window.scrollY+5) + (rect.bottom-bottomBarTop));
       }
@@ -93,6 +200,18 @@ class LineData {
 function hideLinesAfter(id) {
   textData.forEach(line => {
     if (line.id > id) line.hideLine();
+  });
+}
+
+function revealLinesBefore(id) {
+  textData.forEach(line => {
+    if (!line.exposed && line.id < id) line.revealLine(false);
+  });
+}
+
+function revealLinesUpTo(id) {
+  textData.forEach(line => {
+    if (!line.exposed && line.id <= id) line.revealLine(false);
   });
 }
 
@@ -152,8 +271,11 @@ function activeLine() {
 }
 
 
-function reset() {
-  textData.forEach(line => line.hideLine());
+function showOptions() {
+  elid("optionsContainer").style.display = "block";
+}
+function hideOptions() {
+  elid("optionsContainer").style.display = "none";
 }
 
 
@@ -165,7 +287,6 @@ function keypressHandler(e) {
     case 'KeyX' : revealSection("word"); buttonTriggered = elid("revealWord"); break;
     case 'KeyC' : revealSection("line"); buttonTriggered = elid("revealLine"); break;
     case 'KeyE' : edit(); break;
-    case 'KeyR' : reset(); break;
   }
   if (buttonTriggered) {
     buttonTriggered.classList.add("activatedButton");
@@ -236,13 +357,57 @@ elid("textInputSubmit").onclick = memorise;
 elid("textLocalSave").onclick = localSave;
 elid("clearText").onclick = clearText;
 
-elid("resetText").onclick = reset;
-elid("editText").onclick = edit;
+elid("changeText").onclick = edit;
+elid("options").onclick = showOptions;
+elid("closeOptionsWindow").onclick = hideOptions;
 
 
 elid("revealLetter").onclick = () => revealSection("letter");
 elid("revealWord").onclick = () => revealSection("word");
 elid("revealLine").onclick = () => revealSection("line");
+
+
+
+/* option dependency:
+  showWordLengths requires showLineLengths
+  revealInitials requires showWordLengths and showLineLengths
+*/
+elid("optionRevealLineLengths").onchange = () => {
+  if (elid("optionRevealLineLengths").checked) {
+    elid("memorisationSection").classList.add("showLineLengths");
+  } else {
+    elid("memorisationSection").classList.remove("showLineLengths");
+    elid("optionRevealWordLengths").checked = false;
+    elid("memorisationSection").classList.remove("showWordLengths");
+    elid("optionRevealInitials").checked = false;
+    elid("memorisationSection").classList.remove("revealInitials");
+  }
+};
+elid("optionRevealWordLengths").onchange = () => {
+  if (elid("optionRevealWordLengths").checked) {
+    elid("memorisationSection").classList.add("showWordLengths");
+    elid("optionRevealLineLengths").checked = true;
+    elid("memorisationSection").classList.add("showLineLengths");
+  } else {
+    elid("memorisationSection").classList.remove("showWordLengths");
+    elid("optionRevealInitials").checked = false;
+    elid("memorisationSection").classList.remove("revealInitials");
+  }
+};
+elid("optionRevealInitials").onchange = () => {
+  if (elid("optionRevealInitials").checked) {
+    elid("memorisationSection").classList.add("revealInitials");
+    elid("optionRevealLineLengths").checked = true;
+    elid("memorisationSection").classList.add("showLineLengths");
+    elid("optionRevealWordLengths").checked = true;
+    elid("memorisationSection").classList.add("showWordLengths");
+  } else {
+    elid("memorisationSection").classList.remove("revealInitials");
+  }
+};
+
+
+
 
 setCharactersRemaining();
 createSavedTextButtons();

@@ -1,5 +1,5 @@
 function closePoemSearchWindow() {
-  elid("poemSearchWindow").style.display = "none";
+  elid("poemSearchContainer").style.display = "none";
 }
 
 
@@ -9,8 +9,8 @@ async function poetrySearch(e) {
   elid("poemSearchResults").textContent = "searching...";
 
 
-  const author = elid("poemSearch-author").value.slice(0,100);
-  const title = elid("poemSearch-title").value.slice(0,100);
+  const author = elid("poemSearch-author").value.slice(0,100).trim();
+  const title = elid("poemSearch-title").value.slice(0,100).trim();
 
   let parameters = [];
   let terms = [];
@@ -60,7 +60,7 @@ function createPoemButtons(poemResults) {
       textContent: poem.title,
       className: "loadPoemButton",
       onclick: () => {
-        elid("textInput").value = poem.lines.join("\n");
+        elid("textInput").value = poem.lines.join("\n").slice(0,5000);
         setCharactersRemaining();
         closePoemSearchWindow();
       }
@@ -73,7 +73,7 @@ function createPoemButtons(poemResults) {
 
 
 elid("activatePoemSearch").onclick = () => {
-  elid("poemSearchWindow").style.display = "block";
+  elid("poemSearchContainer").style.display = "block";
 };
 
 elid("poemSearch").onclick = poetrySearch;

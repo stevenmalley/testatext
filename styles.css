@@ -4,6 +4,7 @@
 
 body {
   margin: 0;
+  font-family: Verdana, sans-serif;
 }
 
 main {
@@ -14,16 +15,25 @@ main {
 
 
 
-/* POEM SEARCH WINDOW */
+/* MODALS: POEM SEARCH WINDOW, OPTIONS WINDOW */
 
-#poemSearchWindow {
+#poemSearchContainer, #optionsContainer {
   display: none;
   background: white;
   height: 100%;
   width: 100%;
   position: absolute;
+  z-index: 2;
   top: 0;
+  left: 0;
   padding: 1%;
+  box-sizing: border-box;
+}
+
+#poemSearchWindow, #optionsWindow {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 #poemSearchInputs div {
@@ -77,6 +87,83 @@ main {
 }
 #poemSearchResults button:hover {
   background: linear-gradient(rgb(255, 255, 232), rgb(255, 249, 162));
+}
+
+#tips {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+#optionsSection {
+  margin: 25px auto;
+  border: 1px solid black;
+  padding: 15px;
+  width: 80vw;
+  max-width: 400px;
+}
+
+#optionsWindow .optionDiv {
+  margin: 25px 0;
+}
+
+#optionsControls {
+  text-align: center;
+}
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
 }
 
 
@@ -161,28 +248,48 @@ main {
 }
 
 #textDisplay {
-  font-size: 20px;
+  font-size: 1.1rem;
   color: var(--primaryColor);
   cursor: pointer;
 }
 
 .textLine {
-  margin: 1px 0;
+  margin: 0;
+  padding: 1px 0;
   background-color: white;
-  line-height: 23px;
+}
+.textLine:not(:first-child) {
+  border-top: 1px solid #aaa;
 }
 
 .textSpan {
   background-color: white;
-  line-height: 23px;
+  line-height: 2rem;
 }
 
 .textSpan.hidden {
   user-select: none;
 }
 
+.textSpan.space {
+  background-color: var(--primaryColor);
+}
+#memorisationSection.showWordLengths .textSpan.space {
+  background-color: white;
+}
+
 .textLine.hidden, .textSpan.hidden {
   background-color: var(--primaryColor);
+}
+
+#memorisationSection.showLineLengths .textLine.hidden {
+  background-color: transparent;
+}
+
+#memorisationSection.revealInitials .textSpan.hidden.initial {
+  color: #ffdc73;
+  position: relative;
+  left: 2px;
 }
 
 .textLine, .textSpan {
@@ -191,6 +298,7 @@ main {
 
 #bottomBar {
   position: sticky;
+  z-index: 1;
   bottom: 0;
   background-color: white;
   padding: 4px 0;
@@ -226,7 +334,7 @@ main {
   flex-grow: 2;
 }
 
-#inputControls button, #poemSearchControls button, #displayControls button {
+#inputControls button, #poemSearchControls button, #displayControls button, #optionsWindow button {
   color: white;
   background-color: var(--primaryColor);
   border-radius: 10px;
@@ -237,7 +345,7 @@ main {
   height: 55px;
   transition: background-color 0.2s;
 }
-#inputControls button:hover, #poemSearchControls button:hover, #displayControls button:hover {
+#inputControls button:hover, #poemSearchControls button:hover, #displayControls button:hover, #optionsWindow button:hover {
   background-color: #0d204d;
 }
 
@@ -258,6 +366,11 @@ main {
 }
 #revealControls button.activatedButton {
   background-color: rgb(250, 212, 147);
+}
+
+#closeOptionsWindow {
+  width: 100px;
+  padding-top: 5px;
 }
 
 
