@@ -3,12 +3,16 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>TestaText</title>
-    <meta name="description" content="a tool for memorising pieces of text: test yourself and reveal the text bit by bit">
+    <title>TestAText</title>
+    <meta name="description" content="a tool for memorising poems and other text: test yourself and reveal the text bit by bit">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
     <link rel="icon" href="favicon.ico">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="apple-touch-icon" href="logo192.png" />
+    <link rel="manifest" href="manifest.json" />
+    
     <link rel="stylesheet" href="styles.css">
+    
     <script src="utilities.js" defer></script>
     <script src="memorisation.js" defer></script>
     <script src="poemSearch.js" defer></script>
@@ -38,56 +42,59 @@
             <div id="poemSearchResults"></div>
           </div>
         </div>
-        <div id="localTextContainer">
-          <div id="localTextsInfo" class="info">These texts are saved on your device.</div>
-          <div id="localTexts"></div>
-        </div>
-        <textarea id="textInput" maxlength="5000" placeholder="Put the text that you want to memorise here" autofocus></textarea>
-        <div id="charactersRemaining"></div>
-        <div id="inputControls">
-          <button id="activatePoemSearch">Poem Search</button>
-          <button id="clearText">Clear Text</button>
-          <button id="textLocalSave">Save Text</button>
-          <button id="textInputSubmit">BEGIN</button>
+        <div id="localTextMain">
+          <div id="localTextContainer">
+            <div id="localTextsInfo" class="info">These texts are saved on your device.</div>
+            <div id="localTexts"></div>
+          </div>
+          <textarea id="textInput" maxlength="5000" placeholder="Put the text that you want to memorise here" autofocus></textarea>
+          <div id="charactersRemaining"></div>
+          <div id="inputControls">
+            <button id="activatePoemSearch">Poem Search</button>
+            <button id="clearText">Clear Text</button>
+            <button id="textLocalSave">Save Text</button>
+            <button id="textInputSubmit">BEGIN</button>
+          </div>
         </div>
       </div>
       <div id="memorisationSection" class="showLineLengths showWordLengths revealInitials">
-        <div id="optionsContainer">
-          <div id="optionsWindow">
-            <div id="tips">
-              <p>Hide or reveal words by touching them.</p>
-              <p>With a keyboard, 'Z', 'X' and 'C' reveal letters, words and lines, respectively.</p>
-              <p>Set the options below to hide the initial letters, word lengths, or line lengths.</p>
-            </div>
-            <div id="optionsSection">
-              <div class="optionDiv">
-                <div>Show length of each line</div>
-                <label class="switch">
-                  <input type="checkbox" id="optionRevealLineLengths" checked>
-                  <span class="slider"></span>
-                </label>
+        <div id="memorisationMain">
+          <div id="optionsContainer">
+            <div id="optionsWindow">
+              <div id="tips">
+                <p>Hide or reveal words by touching them.</p>
+                <p>'Z', 'X' and 'C' keys reveal letters, words and lines, respectively.</p>
               </div>
-              <div class="optionDiv">
-                <div>Show length of each word</div>
-                <label class="switch">
-                  <input type="checkbox" id="optionRevealWordLengths" checked>
-                  <span class="slider"></span>
-                </label>
+              <div id="optionsSection">
+                <div class="optionDiv">
+                  <div>Show length of each line</div>
+                  <label class="switch">
+                    <input type="checkbox" id="optionRevealLineLengths" checked>
+                    <span class="slider"></span>
+                  </label>
+                </div>
+                <div class="optionDiv">
+                  <div>Show length of each word</div>
+                  <label class="switch">
+                    <input type="checkbox" id="optionRevealWordLengths" checked>
+                    <span class="slider"></span>
+                  </label>
+                </div>
+                <div class="optionDiv">
+                  <div>Show first letter of each word</div>
+                  <label class="switch">
+                    <input type="checkbox" id="optionRevealInitials" checked>
+                    <span class="slider"></span>
+                  </label>
+                </div>
               </div>
-              <div class="optionDiv">
-                <div>Show first letter of each word</div>
-                <label class="switch">
-                  <input type="checkbox" id="optionRevealInitials" checked>
-                  <span class="slider"></span>
-                </label>
+              <div id="optionsControls">
+                <button id="closeOptionsWindow">OK</button>
               </div>
-            </div>
-            <div id="optionsControls">
-              <button id="closeOptionsWindow">OK</button>
             </div>
           </div>
+          <div id="textDisplay"></div>
         </div>
-        <div id="textDisplay"></div>
         <div id="bottomBar">
           <div id="memorisationControls">
             <div id="displayControls">

@@ -270,10 +270,10 @@ function activeLine() {
 
 
 function showOptions() {
-  elid("optionsContainer").style.display = "block";
+  elid("memorisationSection").classList.add("showOptions");
 }
 function hideOptions() {
-  elid("optionsContainer").style.display = "none";
+  elid("memorisationSection").classList.remove("showOptions");
 }
 
 

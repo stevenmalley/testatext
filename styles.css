@@ -29,6 +29,9 @@ main {
   padding: 1%;
   box-sizing: border-box;
 }
+#memorisationSection.showOptions #optionsContainer {
+  display: block;
+}
 
 #poemSearchWindow, #optionsWindow {
   width: 100%;
@@ -233,6 +236,7 @@ input:checked + .slider:before {
   height: 300px;
   box-sizing: border-box;
   background-color: rgb(255, 255, 232);
+  font-family: Verdana, sans-serif;
 }
 
 #charactersRemaining {
@@ -252,6 +256,9 @@ input:checked + .slider:before {
   color: var(--primaryColor);
   cursor: pointer;
 }
+#memorisationSection.showOptions #textDisplay {
+  display: none;
+}
 
 .textLine {
   margin: 0;
@@ -267,21 +274,16 @@ input:checked + .slider:before {
   line-height: 2rem;
 }
 
-.textSpan.hidden {
+.textLine.hidden, .textSpan.hidden, .textSpan.space {
+  background-color: var(--primaryColor);
+}
+.textSpan.hidden, .textSpan.space {
   user-select: none;
 }
 
-.textSpan.space {
-  background-color: var(--primaryColor);
-}
 #memorisationSection.showWordLengths .textSpan.space {
   background-color: white;
 }
-
-.textLine.hidden, .textSpan.hidden {
-  background-color: var(--primaryColor);
-}
-
 #memorisationSection.showLineLengths .textLine.hidden {
   background-color: transparent;
 }
@@ -289,7 +291,7 @@ input:checked + .slider:before {
 #memorisationSection.revealInitials .textSpan.hidden.initial {
   color: #ffdc73;
   position: relative;
-  left: 2px;
+  left: 1px;
 }
 
 .textLine, .textSpan {
@@ -309,10 +311,19 @@ input:checked + .slider:before {
 /* BUTTONS */
 
 #inputControls {
+  max-width: 600px;
   margin-top: 25px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+}
+
+#inputControls #textInputSubmit {
+  background-color: #0e510c;
+  border-color: #0a2b09;
+}
+#inputControls #textInputSubmit:hover {
+  background-color: #0e3a0d;
 }
 
 #memorisationControls {
@@ -387,6 +398,40 @@ input:checked + .slider:before {
 }
 @media screen and (max-width: 799px) {
   .keyShortcut {
+    display: none;
+  }
+}
+
+
+
+/* WIDESCREEN STYLES */
+@media screen and (min-width: 800px) and (min-height: 600px) {
+  
+  main {
+    max-width: 800px; 
+  }
+
+  #memorisationMain {
+    display: flex;
+  }
+
+  #optionsContainer {
+    display: block;
+    position: static;
+    width: 200px;
+  }
+  #optionsSection {
+    width: auto;
+  }
+  #optionsControls {
+    display: none;
+  }
+
+  #memorisationSection.showOptions #textDisplay {
+    display: block;
+  }
+
+  #options {
     display: none;
   }
 }

@@ -1,4 +1,9 @@
+function openPoemSearchWindow() {
+  elid("poemSearchContainer").style.display = "block";
+  elid("localTextMain").style.display = "none";
+}
 function closePoemSearchWindow() {
+  elid("localTextMain").style.display = "block";
   elid("poemSearchContainer").style.display = "none";
 }
 
@@ -72,9 +77,7 @@ function createPoemButtons(poemResults) {
 
 
 
-elid("activatePoemSearch").onclick = () => {
-  elid("poemSearchContainer").style.display = "block";
-};
+elid("activatePoemSearch").onclick = openPoemSearchWindow;
 
 elid("poemSearch").onclick = poetrySearch;
 
