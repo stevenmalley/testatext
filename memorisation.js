@@ -376,6 +376,8 @@ elid("revealLetter").onclick = () => revealSection("letter");
 elid("revealWord").onclick = () => revealSection("word");
 elid("revealLine").onclick = () => revealSection("line");
 
+elid("footer").textContent += new Date().getFullYear();
+
 
 let currentText = localStorage.getItem("currentText");
 if (currentText) {
