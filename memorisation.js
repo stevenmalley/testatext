@@ -169,9 +169,14 @@ class LineData {
   revealLine(scroll = true) {
     if (scroll) this.scrollIntoView();
     
-    while (!this.exposed) {
-      this.revealCharacter();
-    }
+    this.revealedText.textContent += this.hiddenText.textContent;
+    this.hiddenText.textContent = "";
+    this.exposed = true;
+    this.p.classList.remove("hidden");
+
+    // while (!this.exposed) {
+    //   this.revealCharacter();
+    // }
   }
 
   hideLine() {
@@ -217,9 +222,15 @@ function revealLinesUpTo(id) {
 
 
 
-function setCharactersRemaining() {
-  let remaining = 5000 - elid("textInput").value.length;
+function inputUpdate() {
+  let text = elid("textInput").value;
+
+  let remaining = 5000 - text.length;
   elid("charactersRemaining").textContent = remaining + " characters remaining";
+
+  localStorage.setItem("currentText", text.slice(0,5000));
+
+  console.log("current text changed");
 }
 
   
@@ -237,7 +248,7 @@ function memorise() {
   else {
 
     input = input.replace(/\r/g, '\n');
-    let lineArray = input.split("\n");
+    let lineArray = input.split("\n").map(str => str.trim());
 
     lineArray.forEach(line => {
       if (line.length > 0) {
@@ -255,7 +266,7 @@ function edit() {
 
   elid("textDisplay").replaceChildren();
 
-  setCharactersRemaining();
+  inputUpdate();
   elid("textInputSection").style.display = "block";
   elid("memorisationSection").style.display = "none";
   document.body.removeEventListener("keypress", keypressHandler);
@@ -311,6 +322,7 @@ function localSave() {
   localStorage.setItem("savedTexts",JSON.stringify(textArray));
 
   createSavedTextButtons();
+  scrollTo(0,window.innerHeight);
 }
 
 function createSavedTextButtons() {
@@ -329,7 +341,7 @@ function createSavedTextButtons() {
 
 function loadLocalText(text) {
   elid("textInput").value = text;
-  setCharactersRemaining();
+  inputUpdate();
 }
 
 function deleteLocalText(i) {
@@ -341,7 +353,7 @@ function deleteLocalText(i) {
 
 function clearText() {
   elid("textInput").value = "";
-  setCharactersRemaining();
+  inputUpdate();
 }
 
 
@@ -350,7 +362,7 @@ const trashSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 </svg>`;
 
 
-elid("textInput").oninput = setCharactersRemaining;
+elid("textInput").oninput = inputUpdate;
 elid("textInputSubmit").onclick = memorise;
 elid("textLocalSave").onclick = localSave;
 elid("clearText").onclick = clearText;
@@ -405,9 +417,13 @@ elid("optionRevealInitials").onchange = () => {
 };
 
 
+let currentText = localStorage.getItem("currentText");
+if (currentText) {
+  elid("textInput").value = currentText.slice(0,5000);
+}
+inputUpdate();
 
 
-setCharactersRemaining();
 createSavedTextButtons();
 
 

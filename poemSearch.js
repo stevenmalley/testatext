@@ -1,10 +1,8 @@
 function openPoemSearchWindow() {
-  elid("poemSearchContainer").style.display = "block";
-  elid("localTextMain").style.display = "none";
+  elid("textInputSection").classList.add("showPoemSearch");
 }
 function closePoemSearchWindow() {
-  elid("localTextMain").style.display = "block";
-  elid("poemSearchContainer").style.display = "none";
+  elid("textInputSection").classList.remove("showPoemSearch");
 }
 
 
@@ -66,7 +64,7 @@ function createPoemButtons(poemResults) {
       className: "loadPoemButton",
       onclick: () => {
         elid("textInput").value = poem.lines.join("\n").slice(0,5000);
-        setCharactersRemaining();
+        inputUpdate();
         closePoemSearchWindow();
       }
     }, results);
