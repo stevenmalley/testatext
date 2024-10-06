@@ -377,6 +377,15 @@ elid("revealWord").onclick = () => revealSection("word");
 elid("revealLine").onclick = () => revealSection("line");
 
 
+let currentText = localStorage.getItem("currentText");
+if (currentText) {
+  elid("textInput").value = currentText.slice(0,5000);
+}
+inputUpdate();
+
+createSavedTextButtons();
+
+
 
 /* option dependency:
   showWordLengths requires showLineLengths
@@ -392,6 +401,7 @@ elid("optionRevealLineLengths").onchange = () => {
     elid("optionRevealInitials").checked = false;
     elid("memorisationSection").classList.remove("revealInitials");
   }
+  setSavedOptions();
 };
 elid("optionRevealWordLengths").onchange = () => {
   if (elid("optionRevealWordLengths").checked) {
@@ -403,6 +413,7 @@ elid("optionRevealWordLengths").onchange = () => {
     elid("optionRevealInitials").checked = false;
     elid("memorisationSection").classList.remove("revealInitials");
   }
+  setSavedOptions();
 };
 elid("optionRevealInitials").onchange = () => {
   if (elid("optionRevealInitials").checked) {
@@ -414,17 +425,37 @@ elid("optionRevealInitials").onchange = () => {
   } else {
     elid("memorisationSection").classList.remove("revealInitials");
   }
+  setSavedOptions();
 };
 
-
-let currentText = localStorage.getItem("currentText");
-if (currentText) {
-  elid("textInput").value = currentText.slice(0,5000);
+function setSavedOptions() {
+  let option = 0;
+  if (elid("memorisationSection").classList.contains("showLineLengths")) option++;
+  if (elid("memorisationSection").classList.contains("showWordLengths")) option++;
+  if (elid("memorisationSection").classList.contains("revealInitials")) option++;
+  localStorage.setItem("localOptions",option);
 }
-inputUpdate();
 
-
-createSavedTextButtons();
+let localOptions = localStorage.getItem("localOptions");
+if (localOptions) {
+  /* 0: none
+     1: show line length
+     2: + show word length
+     3: + show first letters */
+  localOptions = parseInt(localOptions);
+  if (localOptions < 3) {
+    elid("optionRevealInitials").checked = false;
+    elid("memorisationSection").classList.remove("revealInitials");
+  }
+  if (localOptions < 2) {
+    elid("optionRevealWordLengths").checked = false;
+    elid("memorisationSection").classList.remove("showWordLengths");
+  }
+  if (localOptions < 1) {
+    elid("optionRevealLineLengths").checked = false;
+    elid("memorisationSection").classList.remove("showLineLengths");
+  }
+}
 
 
 

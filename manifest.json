@@ -1,6 +1,6 @@
 {
-  "short_name": "TestAText",
-  "name": "TestAText poetry and other text memorisation tool",
+  "short_name": "test|a|text",
+  "name": "test|a|text poetry and other text memorisation tool",
   "icons": [
     {
       "src": "favicon.ico",
