@@ -190,8 +190,13 @@ input:checked + .slider:before {
 
 /* TEXT INPUT SECTION */
 
-#textInputSection {
-  padding-top: 10px;
+#textInputSection h1 {
+  text-align: center;
+  font-family: 'IBMPLEXSANS';
+  font-size: 3em;
+  margin: 10px 0 30px;
+  color: var(--primaryColor);
+  font-variant: small-caps;
 }
 
 #localTextContainer {
