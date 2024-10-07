@@ -6,7 +6,7 @@
 :root {
   --primaryColor: #112966;
   --secondaryColor: #ffbb45;
-  --footerHeight: 50px;
+  --footerHeight: 4rem;
 }
 
 body {
@@ -284,8 +284,20 @@ input:checked + .slider:before {
   color: #444;
   font-size: 0.9rem;
   display: flex;
-  justify-content: center;
-  align-items: end;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+}
+#footer #buyMeACoffee {
+  margin-bottom: 0.5rem;
+}
+#footer #buyMeACoffee a {
+  text-decoration: none;
+  color: #444;
+}
+#footer #buyMeACoffee a:hover {
+  text-decoration: underline;
+  color: #777;
 }
 
 
