@@ -159,27 +159,28 @@ main {
   -webkit-transition: .4s;
   transition: .4s;
   border-radius: 34px;
+  border: 1px solid #888;
+  box-shadow: 2px 2px #888;
 }
 
 .slider:before {
   position: absolute;
   content: "";
-  height: 26px;
-  width: 26px;
+  height: 24px;
+  width: 24px;
   left: 4px;
-  bottom: 4px;
+  bottom: 3px;
   background-color: white;
   -webkit-transition: .4s;
   transition: .4s;
   border-radius: 50%;
+  border: 1px solid #888;
 }
 
 input:checked + .slider {
   background-color: #2196F3;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  border: 1px solid #666;
+  box-shadow: 2px 2px #666;
 }
 
 input:checked + .slider:before {
@@ -199,6 +200,11 @@ input:checked + .slider:before {
   box-sizing: border-box;
   position: relative; /* for positioning of the footer */
   padding-bottom: var(--footerHeight);
+}
+
+#textInputSection {
+  margin: 0 auto;
+  max-width: 600px;
 }
 
 #textInputSection h1 {
@@ -261,10 +267,14 @@ input:checked + .slider:before {
   background: linear-gradient(rgb(255, 255, 232), rgb(255, 249, 162));
 }
 
+#textInputContainer {
+  width: 100%;
+  max-width: 600px;
+  box-sizing: border-box;
+}
 #textInput {
   display: block;
   width: 100%;
-  max-width: 600px;
   height: 300px;
   box-sizing: border-box;
   background-color: rgb(255, 255, 232);
@@ -279,6 +289,7 @@ input:checked + .slider:before {
   position: absolute;
   width: 100%;
   height: var(--footerHeight);
+  box-sizing: border-box;
   bottom: 0;
   padding: 0 1% 5px;
   color: #444;
@@ -384,16 +395,42 @@ input:checked + .slider:before {
   position: sticky;
   z-index: 1;
   bottom: 0;
-  background-color: #ffdaa6;
+  background-color: #e0e0e0;
   padding: 4px 0;
-  border-top: 1px solid var(--secondaryColor);
+  border-top: 1px solid #bbb;
 }
 
 
 
 /* BUTTONS */
 
-#inputControls {
+#inputControls button {
+  background: white;
+  border-style: solid;
+  border-color: grey;
+  border-width: 1px 1px 0;
+  height: 2rem;
+  width: 2rem;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+#textLocalSave {
+  color: var(--primaryColor);
+}
+#textLocalSave:hover {
+  color: white;
+  background-color: var(--primaryColor);
+}
+#clearText {
+  color: red;
+  float: right;
+}
+#clearText:hover {
+  color: white;
+  background-color: red;
+}
+
+#mainButtons {
   max-width: 600px;
   margin: 25px 0;
   display: flex;
@@ -401,11 +438,11 @@ input:checked + .slider:before {
   justify-content: space-around;
 }
 
-#inputControls #textInputSubmit {
+#mainButtons #textInputSubmit {
   background-color: #0e510c;
   border-color: #0a2b09;
 }
-#inputControls #textInputSubmit:hover {
+#mainButtons #textInputSubmit:hover {
   background-color: #0e3a0d;
 }
 
@@ -428,7 +465,7 @@ input:checked + .slider:before {
   flex-grow: 2;
 }
 
-#inputControls button, #poemSearchControls button, #displayControls button, #optionsWindow button {
+#mainButtons button, #poemSearchControls button, #displayControls button, #optionsWindow button {
   color: white;
   background-color: var(--primaryColor);
   border-radius: 10px;
@@ -440,7 +477,7 @@ input:checked + .slider:before {
   min-width: 55px;
   transition: background-color 0.2s;
 }
-#inputControls button:hover, #poemSearchControls button:hover, #displayControls button:hover, #optionsWindow button:hover {
+#mainButtons button:hover, #poemSearchControls button:hover, #displayControls button:hover, #optionsWindow button:hover {
   background-color: #0d204d;
 }
 
@@ -470,7 +507,7 @@ input:checked + .slider:before {
 
 
 @media screen and (max-width: 400px) {
-  #inputControls button, #revealControls button, #displayControls button {
+  #revealControls button, #displayControls button {
     font-size: 0.9em;
     border-width: 2px;
   }

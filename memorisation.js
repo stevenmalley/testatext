@@ -329,14 +329,18 @@ function localSave() {
 function createSavedTextButtons() {
   elid("localTexts").replaceChildren();
   let savedTexts = localStorage.getItem("savedTexts");
-  if (savedTexts) {
-    let textArray = JSON.parse(savedTexts);
+  let textArray = [];
+  if (savedTexts && (textArray = JSON.parse(savedTexts)).length > 0) {
     textArray.forEach((text,i) => {
       const textDiv = create("div",{},"localTexts");
       create("button", {onclick: () => deleteLocalText(i), className: "deleteButton", innerHTML: trashSVG}, textDiv);
       create("button",{onclick: () => loadLocalText(text), className: "loadButton", textContent: text.slice(0,30)+"..."},textDiv);
     });
-    elid("localTextsInfo").style.display = (textArray.length > 0)? "block" : "none";
+    elid("localTextsInfo").style.display = "block";
+    elid("localTextsEmptyInfo").style.display = "none";
+  } else {
+    elid("localTextsEmptyInfo").style.display = "block";
+    elid("localTextsInfo").style.display = "none";
   }
 }
 
