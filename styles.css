@@ -406,13 +406,13 @@ input:checked + .slider:before {
 
 #inputControls button {
   background: white;
-  border-style: solid;
-  border-color: grey;
-  border-width: 1px 1px 0;
+  border: 1px solid grey;
   height: 2rem;
   width: 2rem;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+  position: relative;
+  top: 1px;
 }
 #textLocalSave {
   color: var(--primaryColor);
