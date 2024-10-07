@@ -1,4 +1,5 @@
 let textData = [];
+const textInputLimit = 5000;
 
 class LineData {
   static latestID = 0; // Stores count of number of instances created
@@ -225,10 +226,10 @@ function revealLinesUpTo(id) {
 function inputUpdate() {
   let text = elid("textInput").value;
 
-  let remaining = 5000 - text.length;
+  let remaining = textInputLimit - text.length;
   elid("charactersRemaining").textContent = remaining + " characters remaining";
 
-  localStorage.setItem("currentText", text.slice(0,5000));
+  localStorage.setItem("currentText", text.slice(0,textInputLimit));
 
   console.log("current text changed");
 }
@@ -244,7 +245,7 @@ function memorise() {
   if (input.length === 0) {
     alert("Type some text to memorise in the box. Linebreaks will be helpful.");
     elid("textInput").focus();
-  } else if (input.length > 5000) alert("Exceeds maximum text length of 5000 characters.");
+  } else if (input.length > textInputLimit) alert("Exceeds maximum text length of "+textInputLimit+" characters.");
   else {
 
     input = input.replace(/\r/g, '\n');
@@ -362,6 +363,7 @@ const trashSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 </svg>`;
 
 
+elid("textInput").maxLength = textInputLimit;
 elid("textInput").oninput = inputUpdate;
 elid("textInputSubmit").onclick = memorise;
 elid("textLocalSave").onclick = localSave;
@@ -376,12 +378,12 @@ elid("revealLetter").onclick = () => revealSection("letter");
 elid("revealWord").onclick = () => revealSection("word");
 elid("revealLine").onclick = () => revealSection("line");
 
-elid("footer").textContent += new Date().getFullYear();
+elid("footerYear").textContent = new Date().getFullYear();
 
 
 let currentText = localStorage.getItem("currentText");
 if (currentText) {
-  elid("textInput").value = currentText.slice(0,5000);
+  elid("textInput").value = currentText.slice(0,textInputLimit);
 }
 inputUpdate();
 

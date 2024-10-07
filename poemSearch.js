@@ -1,3 +1,6 @@
+/* DEPENDENCY: memorisation.js (for textInputLimit) */
+
+
 function openPoemSearchWindow() {
   elid("textInputSection").classList.add("showPoemSearch");
 }
@@ -63,7 +66,7 @@ function createPoemButtons(poemResults) {
       textContent: poem.title,
       className: "loadPoemButton",
       onclick: () => {
-        elid("textInput").value = poem.lines.join("\n").slice(0,5000);
+        elid("textInput").value = poem.lines.join("\n").slice(0,textInputLimit);
         inputUpdate();
         closePoemSearchWindow();
       }

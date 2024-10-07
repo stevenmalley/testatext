@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>TestAText</title>
+    <title>test|a|text</title>
     <meta name="description" content="a tool for memorising poems and other text: test yourself and reveal the text bit by bit">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
@@ -44,7 +44,7 @@
         </div>
         <div id="localTextMain">
           <h1>test|a|text</h1>
-          <textarea id="textInput" maxlength="5000" placeholder="Put the text that you want to memorise here" autofocus></textarea>
+          <textarea id="textInput" placeholder="Put the text that you want to memorise here" autofocus></textarea>
           <div id="charactersRemaining"></div>
           <div id="inputControls">
             <button id="activatePoemSearch">Poem Search</button>
@@ -56,7 +56,7 @@
             <div id="localTextsInfo" class="info">These texts are saved on your device.</div>
             <div id="localTexts"></div>
           </div>
-          <div id="footer">&copy; Steven Malley </div>
+          <div id="footer">&copy; <span id="footerYear"></span>&nbsp;Steven Malley</div>
         </div>
       </div>
       <div id="memorisationSection" class="showLineLengths showWordLengths revealInitials">
