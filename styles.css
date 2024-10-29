@@ -22,9 +22,9 @@ main {
 
 
 
-/* MODALS: POEM SEARCH WINDOW, OPTIONS WINDOW */
+/* MODALS: POEM/LYRICS SEARCH WINDOW, OPTIONS WINDOW */
 
-#poemSearchContainer, #optionsContainer {
+.searchContainer, #optionsContainer {
   display: none;
   background: white;
   height: 100%;
@@ -35,14 +35,14 @@ main {
   padding: 1%;
   box-sizing: border-box;
 }
-#poemSearchContainer {
+.searchContainer {
   position: absolute;
   padding-top: 2rem;
 }
-#textInputSection.showPoemSearch #poemSearchContainer {
+#textInputSection.showPoemSearch #poemSearchContainer, #textInputSection.showLyricsSearch #lyricsSearchContainer {
   display: block;
 }
-#textInputSection.showPoemSearch #localTextMain {
+#textInputSection.showPoemSearch #localTextMain, #textInputSection.showLyricsSearch #localTextMain {
   display: none;
 }
 #memorisationSection.showOptions #optionsContainer {
@@ -51,51 +51,54 @@ main {
   position: fixed;
 }
 
-#poemSearchWindow, #optionsWindow {
+
+
+.searchWindow, #optionsWindow {
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
 }
 
-#poemSearchInputs div {
+.searchInputs div {
   margin: 10px 2px;
   height: 4rem;
 }
 
-#poemSearchInputs input {
+.searchInputs input {
   padding: 1.4rem 0.75rem 0.6rem;
   border-radius: 10px;
   border-width: 1px;
   display: block;
   width: 80%;
   max-width: 400px;
+  font-size: 1rem;
+  color: #336;
 }
 
-#poemSearchInputs input::placeholder {
+.searchInputs input::placeholder {
   display: none;
   visibility: hidden;
 }
 
-#poemSearchInputs label {
+.searchInputs label {
   display: block;
-  color: #666;
-  transform: translate(0.5rem, -2rem);
+  color: #777;
+  transform: translate(.5rem, -2.2rem);
   transition: all 0.2s ease-out;
   cursor: text;
 }
 
-#poemSearchInputs input:focus + label,
-#poemSearchInputs input:not(:placeholder-shown) + label  {
-  color: #333;
-  font-size: 0.9em;
-  transform: translate(0.75rem, -2.9rem);
+.searchInputs input:focus + label,
+.searchInputs input:not(:placeholder-shown) + label  {
+  font-size: .8rem;
+  transform: translate(1.25rem, -3rem);
 }
 
-#poemSearchResults {
+.searchResults {
   padding-top: 15px;
 }
 
-#poemSearchResults button {
+.searchResults button {
   font-size: 1.3em;
   display: block;
   margin: 6px 0;
@@ -106,89 +109,11 @@ main {
   text-align: left;
   max-width: min(90vw, 500px);
 }
-#poemSearchResults button:hover {
+.searchResults button:hover {
   background: linear-gradient(rgb(255, 255, 232), rgb(255, 249, 162));
 }
 
-#tips {
-  font-size: 0.9rem;
-  color: #555;
-  text-align: center;
-}
 
-#optionsSection {
-  margin: 25px auto;
-  border: 1px solid black;
-  padding: 15px;
-  width: 80vw;
-  max-width: 400px;
-  background: #e0e0e0;
-}
-
-#optionsWindow .optionDiv {
-  margin: 25px 0;
-}
-
-#optionsControls {
-  text-align: center;
-}
-
-/* The switch - the box around the slider */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
-
-/* Hide default HTML checkbox */
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-/* The slider */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-  border-radius: 34px;
-  border: 1px solid #888;
-  box-shadow: 2px 2px #888;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 24px;
-  width: 24px;
-  left: 4px;
-  bottom: 3px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-  border-radius: 50%;
-  border: 1px solid #888;
-}
-
-input:checked + .slider {
-  background-color: #2196F3;
-  border: 1px solid #666;
-  box-shadow: 2px 2px #666;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
 
 
 
@@ -464,19 +389,19 @@ input:checked + .slider:before {
   flex-grow: 2;
 }
 
-#mainButtons button, #poemSearchControls button, #displayControls button, #optionsWindow button {
+#mainButtons button, #poemSearchControls button, #lyricsSearchControls button, #displayControls button, #optionsWindow button {
   color: white;
   background-color: var(--primaryColor);
   border-radius: 10px;
   border: 6px solid #071025;
-  font-size: 1.2em;
+  font-size: min(1.2em, 4vw);
   font-family: math;
   font-weight: bold;
   height: 55px;
   min-width: 55px;
   transition: background-color 0.2s;
 }
-#mainButtons button:hover, #poemSearchControls button:hover, #displayControls button:hover, #optionsWindow button:hover {
+#mainButtons button:hover, #poemSearchControls button:hover, #lyricsSearchControls button:hover, #displayControls button:hover, #optionsWindow button:hover {
   background-color: #0d204d;
 }
 
@@ -503,6 +428,89 @@ input:checked + .slider:before {
   width: 100px;
   padding-top: 5px;
 }
+
+
+
+#tips {
+  font-size: 0.9rem;
+  color: #555;
+  text-align: center;
+}
+
+#optionsSection {
+  margin: 25px auto;
+  border: 1px solid black;
+  padding: 15px;
+  width: 80vw;
+  max-width: 400px;
+  background: #e0e0e0;
+}
+
+#optionsWindow .optionDiv {
+  margin: 25px 0;
+}
+
+#optionsControls {
+  text-align: center;
+}
+
+/* The switch - the box around the slider */
+#optionsSection .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+#optionsSection .switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+#optionsSection .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 34px;
+  border: 1px solid #888;
+  box-shadow: 2px 2px #888;
+}
+
+#optionsSection .slider:before {
+  position: absolute;
+  content: "";
+  height: 24px;
+  width: 24px;
+  left: 4px;
+  bottom: 3px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 50%;
+  border: 1px solid #888;
+}
+
+#optionsSection input:checked + .slider {
+  background-color: #2196F3;
+  border: 1px solid #666;
+  box-shadow: 2px 2px #666;
+}
+
+#optionsSection input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
 
 
 @media screen and (max-width: 400px) {

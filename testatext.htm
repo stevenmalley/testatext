@@ -16,14 +16,16 @@
     <script src="utilities.min.js" defer></script>
     <script src="memorisation.min.js" defer></script>
     <script src="poemSearch.min.js" defer></script>
+    <script src="lyricsSearch.min.js" defer></script>
   </head>
   <body>
     <main>
       <div id="textInputSection">
-        <div id="poemSearchContainer">
-          <div id="poemSearchWindow">
+
+        <div id="poemSearchContainer" class="searchContainer">
+          <div id="poemSearchWindow" class="searchWindow">
             <form onsubmit="poetrySearch(event)">
-              <div id="poemSearchInputs">
+              <div id="poemSearchInputs" class="searchInputs">
                 <div>
                   <input type="text" id="poemSearch-author" name="author" placeholder="author" />
                   <label for="poemSearch-author">author</label>
@@ -33,15 +35,39 @@
                   <label for="poemSearch-title">title</label>
                 </div>
               </div>
-              <div id="poemSearchControls">
+              <div id="poemSearchControls" class="searchControls">
                 <div class="info">Search PoetryDB.org for poems.</div>
                 <button id="poemSearch" type="submit">Search</button>
                 <button id="poemSearchClose" type="button">Cancel</button>
               </div>
             </form>
-            <div id="poemSearchResults"></div>
+            <div id="poemSearchResults" class="searchResults"></div>
           </div>
         </div>
+
+        <div id="lyricsSearchContainer" class="searchContainer">
+          <div id="lyricsSearchWindow" class="searchWindow">
+            <form onsubmit="lyricsSearch(event)">
+              <div id="lyricsSearchInputs" class="searchInputs">
+                <div>
+                  <input type="text" id="lyricsSearch-artist" name="artist" placeholder="artist" />
+                  <label for="lyricsSearch-artist">artist</label>
+                </div>
+                <div>
+                  <input type="text" id="lyricsSearch-title" name="title" placeholder="title" required />
+                  <label for="lyricsSearch-title">title</label>
+                </div>
+              </div>
+              <div id="lyricsSearchControls" class="searchControls">
+                <div class="info">Search for song lyrics.</div>
+                <button id="lyricsSearch" type="submit">Search</button>
+                <button id="lyricsSearchClose" type="button">Cancel</button>
+              </div>
+            </form>
+            <div id="lyricsSearchResults" class="searchResults"></div>
+          </div>
+        </div>
+
         <div id="localTextMain">
           <h1>test|a|text</h1>
           <div id="textInputContainer">
@@ -63,6 +89,7 @@
           <div id="charactersRemaining"></div>
           <div id="mainButtons">
             <button id="activatePoemSearch">Poem Search</button>
+            <button id="activateLyricsSearch">Lyrics Search</button>
             <button id="textInputSubmit">BEGIN</button>
           </div>
           <div id="localTextContainer">
@@ -73,6 +100,7 @@
             <div id="localTextsInfo" class="info">These texts are saved on your device.</div>
             <div id="localTexts"></div>
           </div>
+
           <div id="footer">
             <div id="buyMeACoffee">
               <a href="https://buymeacoffee.com/malleus">buy me a coffee
@@ -87,6 +115,9 @@
             </div>
         </div>
       </div>
+
+
+
       <div id="memorisationSection" class="showLineLengths showWordLengths revealInitials">
         <div id="memorisationMain">
           <div id="optionsContainer">
