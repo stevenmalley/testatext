@@ -259,6 +259,7 @@ function memorise() {
 
     elid("textInputSection").style.display = "none";
     elid("memorisationSection").style.display = "block";
+    scroll(0,0);
     document.body.addEventListener("keypress", keypressHandler);
   }
 }
