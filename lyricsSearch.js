@@ -49,6 +49,8 @@ async function lyricsSearch(e) {
         elid("textInput").value = (heading+responseJSON.lyrics.replaceAll(/\[.*\]\n/g,"")).slice(0,textInputLimit);
         inputUpdate();
         closeLyricsSearchWindow();
+        elid("textInput").scroll(0,0);
+        
       } else {
         elid("lyricsSearchResults").textContent = "no results found";
       }

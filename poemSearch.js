@@ -69,6 +69,8 @@ function createPoemButtons(poemResults) {
         elid("textInput").value = poem.lines.join("\n").slice(0,textInputLimit);
         inputUpdate();
         closePoemSearchWindow();
+        elid("textInput").scroll(0,0);
+        
       }
     }, results);
 

@@ -347,6 +347,7 @@ function createSavedTextButtons() {
 
 function loadLocalText(text) {
   elid("textInput").value = text;
+  elid("textInput").scroll(0,0);
   inputUpdate();
 }
 
