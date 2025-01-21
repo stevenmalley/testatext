@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>test|a|text</title>
+    <meta name="description" content="a tool for memorising poems and other text: test yourself and reveal the text bit by bit">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="logo192.png" />
+    <link rel="manifest" href="manifest.json" />
+    
+    <link rel="stylesheet" href="styles.min.css">
+    
+    <script src="utilities.min.js" defer></script>
+    <script src="memorisation.min.js" defer></script>
+    <script src="poemSearch.min.js" defer></script>
+    <script src="lyricsSearch.min.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <div id="textInputSection">
+
+        <div id="poemSearchContainer" class="searchContainer">
+          <div id="poemSearchWindow" class="searchWindow">
+            <form onsubmit="poetrySearch(event)">
+              <div id="poemSearchInputs" class="searchInputs">
+                <div>
+                  <input type="text" id="poemSearch-author" name="author" placeholder="author" />
+                  <label for="poemSearch-author">author</label>
+                </div>
+                <div>
+                  <input type="text" id="poemSearch-title" name="title" placeholder="title" />
+                  <label for="poemSearch-title">title</label>
+                </div>
+              </div>
+              <div id="poemSearchControls" class="searchControls">
+                <div class="info">Search PoetryDB.org for poems.</div>
+                <button id="poemSearch" type="submit">Search</button>
+                <button id="poemSearchClose" type="button">Cancel</button>
+              </div>
+            </form>
+            <div id="poemSearchResults" class="searchResults"></div>
+          </div>
+        </div>
+
+        <div id="lyricsSearchContainer" class="searchContainer">
+          <div id="lyricsSearchWindow" class="searchWindow">
+            <form onsubmit="lyricsSearch(event)">
+              <div id="lyricsSearchInputs" class="searchInputs">
+                <div>
+                  <input type="text" id="lyricsSearch-artist" name="artist" placeholder="artist" />
+                  <label for="lyricsSearch-artist">artist</label>
+                </div>
+                <div>
+                  <input type="text" id="lyricsSearch-title" name="title" placeholder="title" required />
+                  <label for="lyricsSearch-title">title</label>
+                </div>
+              </div>
+              <div id="lyricsSearchControls" class="searchControls">
+                <div class="info">Search for song lyrics.</div>
+                <button id="lyricsSearch" type="submit">Search</button>
+                <button id="lyricsSearchClose" type="button">Cancel</button>
+              </div>
+            </form>
+            <div id="lyricsSearchResults" class="searchResults"></div>
+          </div>
+        </div>
+
+        <div id="localTextMain">
+          <h1>test|a|text</h1>
+          <div id="textInputContainer">
+            <div id="inputControls">
+              <button id="textLocalSave">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy-fill" viewBox="0 0 16 16" style="vertical-align: bottom;">
+                  <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5z"/>
+                  <path d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z"/>
+                </svg>
+              </button>
+              <button id="clearText">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16" style="vertical-align: bottom;">
+                  <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                </svg>
+              </button>
+            </div>
+            <textarea id="textInput" placeholder="Put the text that you want to memorise here" autofocus></textarea>
+          </div>
+          <div id="charactersRemaining"></div>
+          <div id="mainButtons">
+            <button id="activatePoemSearch">Poem Search</button>
+            <button id="activateLyricsSearch">Lyrics Search</button>
+            <button id="textInputSubmit">BEGIN</button>
+          </div>
+          <div id="localTextContainer">
+            <div id="localTextsEmptyInfo" class="info">Click the save button above (<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy-fill" viewBox="0 0 16 16" style="vertical-align: bottom;">
+              <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5z"/>
+              <path d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z"/>
+            </svg>) to save the text on your device.</div>
+            <div id="localTextsInfo" class="info">These texts are saved on your device.</div>
+            <div id="localTexts"></div>
+          </div>
+
+          <div id="footer">
+            <div id="buyMeACoffee">
+              <a href="https://buymeacoffee.com/malleus">buy me a coffee
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5"/>
+                  <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z"/>
+                </svg>
+              </a>
+            </div>
+            <div id="copyrightNotice">
+              &copy; <span id="footerYear"></span>&nbsp;Steven Malley</div>
+            </div>
+        </div>
+      </div>
+
+
+
+      <div id="memorisationSection" class="showLineLengths showWordLengths revealInitials">
+        <div id="memorisationMain">
+          <div id="optionsContainer">
+            <div id="optionsWindow">
+              <div id="tips">
+                <p>Hide or reveal words by touching them.</p>
+                <p>'Z', 'X' and 'C' keys reveal letters, words and lines, respectively.</p>
+              </div>
+              <div id="optionsSection">
+                <div class="optionDiv">
+                  <div>Show length of each line</div>
+                  <label class="switch">
+                    <input type="checkbox" id="optionRevealLineLengths" checked>
+                    <span class="slider"></span>
+                  </label>
+                </div>
+                <div class="optionDiv">
+                  <div>Show length of each word</div>
+                  <label class="switch">
+                    <input type="checkbox" id="optionRevealWordLengths" checked>
+                    <span class="slider"></span>
+                  </label>
+                </div>
+                <div class="optionDiv">
+                  <div>Show first letter of each word</div>
+                  <label class="switch">
+                    <input type="checkbox" id="optionRevealInitials" checked>
+                    <span class="slider"></span>
+                  </label>
+                </div>
+              </div>
+              <div id="optionsControls">
+                <button id="closeOptionsWindow">OK</button>
+              </div>
+            </div>
+          </div>
+          <div id="textDisplay"></div>
+        </div>
+        <div id="bottomBar">
+          <div id="memorisationControls">
+            <div id="displayControls">
+              <button id="changeText">Change<br />Text</button>
+              <button id="options">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear-fill" viewBox="0 0 16 16" style="vertical-align: middle;">
+                  <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
+                </svg>
+              </button>
+            </div>
+            <div id="revealControls">
+              <button id="revealLetter">Letter<br /><span class="keyShortcut">(Z)</span></button>
+              <button id="revealWord">Word<br /><span class="keyShortcut">(X)</span></button>
+              <button id="revealLine">Line<br /><span class="keyShortcut">(C)</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,573 @@
+@font-face {
+  font-family: 'IBMPlexSans';
+  src: url('fonts/IBM_Plex_Sans/IBMPlexSans-Regular.ttf') format('truetype');
+}
+
+:root {
+  --primaryColor: #112966;
+  --secondaryColor: #ffbb45;
+  --footerHeight: 4rem;
+}
+
+body {
+  margin: 0;
+  font-family: Verdana, sans-serif;
+}
+
+main {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+
+
+/* MODALS: POEM/LYRICS SEARCH WINDOW, OPTIONS WINDOW */
+
+.searchContainer, #optionsContainer {
+  display: none;
+  background: white;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  padding: 1%;
+  box-sizing: border-box;
+}
+.searchContainer {
+  position: absolute;
+  padding-top: 2rem;
+}
+#textInputSection.showPoemSearch #poemSearchContainer, #textInputSection.showLyricsSearch #lyricsSearchContainer {
+  display: block;
+}
+#textInputSection.showPoemSearch #localTextMain, #textInputSection.showLyricsSearch #localTextMain {
+  display: none;
+}
+#memorisationSection.showOptions #optionsContainer {
+  display: flex;
+  align-items: center;
+  position: fixed;
+}
+
+
+
+.searchWindow, #optionsWindow {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.searchInputs div {
+  margin: 10px 2px;
+  height: 4rem;
+}
+
+.searchInputs input {
+  padding: 1.4rem 0.75rem 0.6rem;
+  border-radius: 10px;
+  border-width: 1px;
+  display: block;
+  width: 80%;
+  max-width: 400px;
+  font-size: 1rem;
+  color: #336;
+}
+
+.searchInputs input::placeholder {
+  display: none;
+  visibility: hidden;
+}
+
+.searchInputs label {
+  display: block;
+  color: #777;
+  transform: translate(.5rem, -2.2rem);
+  transition: all 0.2s ease-out;
+  cursor: text;
+}
+
+.searchInputs input:focus + label,
+.searchInputs input:not(:placeholder-shown) + label  {
+  font-size: .8rem;
+  transform: translate(1.25rem, -3rem);
+}
+
+.searchResults {
+  padding-top: 15px;
+}
+
+.searchResults button {
+  font-size: 1.3em;
+  display: block;
+  margin: 6px 0;
+  padding: 10px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  background: linear-gradient(white, rgb(255, 255, 217));
+  text-align: left;
+  max-width: min(90vw, 500px);
+}
+.searchResults button:hover {
+  background: linear-gradient(rgb(255, 255, 232), rgb(255, 249, 162));
+}
+
+
+
+
+
+
+
+/* TEXT INPUT SECTION */
+
+#localTextMain {
+  min-height: 100vh;
+  box-sizing: border-box;
+  position: relative; /* for positioning of the footer */
+  padding-bottom: var(--footerHeight);
+}
+
+#textInputSection {
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+#textInputSection h1 {
+  text-align: center;
+  font-family: 'IBMPLEXSANS';
+  font-size: 3em;
+  margin: 0;
+  padding: 10px 0 30px;
+  color: var(--primaryColor);
+  font-variant: small-caps;
+}
+
+#localTextContainer {
+  padding: 1%;
+}
+
+#localTextsInfo {
+  display: none;
+}
+
+.info {
+  color: #444;
+  margin-bottom: 10px;
+}
+
+#localTexts div {
+  margin: 10px 0;
+}
+
+#localTexts div button {
+  display: inline-block;
+  border: 1px solid #aaa;
+  height: 30px;
+  line-height: 30px;
+}
+
+#localTexts div button.deleteButton {
+  background: white;
+  color: red;
+  margin-right: 5px;
+  border-radius: 50%;
+  width: 30px;
+  vertical-align: top;
+  line-height: 33px;
+}
+#localTexts div button.deleteButton:hover {
+  background: red;
+  color: white;
+}
+
+#localTexts div button.loadButton {
+  border-radius: 5px;
+  background: linear-gradient(white, rgb(255, 255, 217));
+  overflow: hidden;
+  max-width: 240px;
+  line-break: auto;
+  text-align: left;
+}
+#localTexts div button.loadButton:hover {
+  background: linear-gradient(rgb(255, 255, 232), rgb(255, 249, 162));
+}
+
+#textInputContainer {
+  width: 100%;
+  max-width: 600px;
+  box-sizing: border-box;
+}
+#textInput {
+  display: block;
+  width: 100%;
+  height: 300px;
+  box-sizing: border-box;
+  background-color: rgb(255, 255, 232);
+  font-family: Verdana, sans-serif;
+}
+
+#charactersRemaining {
+  color: red;
+}
+
+#footer {
+  position: absolute;
+  width: 100%;
+  height: var(--footerHeight);
+  box-sizing: border-box;
+  bottom: 0;
+  padding: 0 1% 5px;
+  color: #444;
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+}
+#footer #buyMeACoffee {
+  margin-bottom: 0.5rem;
+}
+#footer #buyMeACoffee a {
+  text-decoration: none;
+  color: #444;
+}
+#footer #buyMeACoffee a:hover {
+  text-decoration: underline;
+  color: #777;
+}
+
+
+
+/* MEMORISATION SECTION */
+
+#memorisationSection {
+  display: none;
+}
+
+#memorisationMain {
+  border-top: 15px solid var(--secondaryColor);
+  border-bottom: 15px solid var(--secondaryColor);
+}
+
+#textDisplay {
+  max-width: 600px;
+  font-family: 'IBMPlexSans', sans-serif;
+  font-variant-ligatures: none;
+  font-size: 1.1rem;
+  color: var(--primaryColor);
+  cursor: pointer;
+  padding: 0 2%;
+}
+
+.textLine {
+  margin: 0;
+  padding: 1px 0;
+  background-color: white;
+}
+.textLine:not(:first-child) {
+  border-top: 1px solid #aaa;
+}
+
+.textSpan {
+  background-color: white;
+  line-height: 1.7rem;
+}
+
+.textSpan.hidden {
+  border-radius: 3px;
+}
+
+#memorisationSection:not(.showWordLengths) .textSpan.hidden, #memorisationSection:not(.showWordLengths) .textSpan.space {
+  border-radius: 0;
+}
+#memorisationSection:not(.showWordLengths) .textSpan.hidden:first-child {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+#memorisationSection:not(.showWordLengths) .textSpan.hidden:last-child {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.textLine.hidden, .textSpan.hidden, .textSpan.space {
+  background-color: var(--primaryColor);
+}
+.textSpan.hidden, .textSpan.space {
+  user-select: none;
+}
+
+#memorisationSection.showWordLengths .textSpan.space {
+  background-color: white;
+}
+#memorisationSection.showLineLengths .textLine.hidden {
+  background-color: transparent;
+}
+
+#memorisationSection.revealInitials .textSpan.hidden.initial {
+  color: #ffdc73;
+  position: relative;
+  left: 1px;
+}
+
+.textLine, .textSpan {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+#bottomBar {
+  position: sticky;
+  z-index: 1;
+  bottom: 0;
+  background-color: #e0e0e0;
+  padding: 4px 0;
+  border-top: 1px solid #bbb;
+}
+
+
+
+/* BUTTONS */
+
+#inputControls button {
+  background: white;
+  border: 1px solid grey;
+  margin: 0 15px;
+  height: 2rem;
+  width: 2rem;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  position: relative;
+  top: 1px;
+}
+#textLocalSave {
+  color: var(--primaryColor);
+}
+#textLocalSave:hover {
+  color: white;
+  background-color: var(--primaryColor);
+}
+#clearText {
+  color: red;
+  float: right;
+}
+#clearText:hover {
+  color: white;
+  background-color: red;
+}
+
+#mainButtons {
+  max-width: 600px;
+  margin: 25px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+#mainButtons #textInputSubmit {
+  background-color: #0e510c;
+  border-color: #0a2b09;
+}
+#mainButtons #textInputSubmit:hover {
+  background-color: #0e3a0d;
+}
+
+#memorisationControls {
+  display: flex;
+  flex-direction: row;
+}
+
+#displayControls, #revealControls {
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+#displayControls {
+  flex-grow: 1;
+}
+#revealControls {
+  flex-grow: 2;
+}
+
+#mainButtons button, #poemSearchControls button, #lyricsSearchControls button, #displayControls button, #optionsWindow button {
+  color: white;
+  background-color: var(--primaryColor);
+  border-radius: 10px;
+  border: 6px solid #071025;
+  font-size: min(1.2em, 4vw);
+  font-family: math;
+  font-weight: bold;
+  height: 55px;
+  min-width: 55px;
+  transition: background-color 0.2s;
+}
+#mainButtons button:hover, #poemSearchControls button:hover, #lyricsSearchControls button:hover, #displayControls button:hover, #optionsWindow button:hover {
+  background-color: #0d204d;
+}
+
+#revealControls button {
+  background-color: var(--secondaryColor);
+  border-radius: 10px;
+  border: 3px solid #a76a00;
+  font-size: 1.2em;
+  font-family: math;
+  font-weight: bold;
+  height: 55px;
+  transition: background-color 0.2s;
+  width: 20vw;
+  max-width: 100px;
+}
+#revealControls button:hover {
+  background-color: #d38600;
+}
+#revealControls button.activatedButton {
+  background-color: rgb(250, 212, 147);
+}
+
+#closeOptionsWindow {
+  width: 100px;
+  padding-top: 5px;
+}
+
+
+
+#tips {
+  font-size: 0.9rem;
+  color: #555;
+  text-align: center;
+}
+
+#optionsSection {
+  margin: 25px auto;
+  border: 1px solid black;
+  padding: 15px;
+  width: 80vw;
+  max-width: 400px;
+  background: #e0e0e0;
+}
+
+#optionsWindow .optionDiv {
+  margin: 25px 0;
+}
+
+#optionsControls {
+  text-align: center;
+}
+
+/* The switch - the box around the slider */
+#optionsSection .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+#optionsSection .switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+#optionsSection .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 34px;
+  border: 1px solid #888;
+  box-shadow: 2px 2px #888;
+}
+
+#optionsSection .slider:before {
+  position: absolute;
+  content: "";
+  height: 24px;
+  width: 24px;
+  left: 4px;
+  bottom: 3px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 50%;
+  border: 1px solid #888;
+}
+
+#optionsSection input:checked + .slider {
+  background-color: #2196F3;
+  border: 1px solid #666;
+  box-shadow: 2px 2px #666;
+}
+
+#optionsSection input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+
+
+@media screen and (max-width: 400px) {
+  #revealControls button, #displayControls button {
+    font-size: 0.9em;
+    border-width: 2px;
+  }
+}
+@media screen and (max-width: 350px) {
+  #revealControls button {
+    width: auto;
+  }
+}
+@media screen and (max-width: 1023px) {
+  .keyShortcut {
+    display: none;
+  }
+}
+
+
+
+/* WIDESCREEN STYLES */
+@media screen and (min-width: 800px) and (min-height: 600px) {
+  
+  main {
+    max-width: 800px; 
+  }
+
+  #memorisationMain {
+    display: flex;
+  }
+
+  #optionsContainer {
+    display: flex;
+    position: static;
+    width: 200px;
+  }
+  #optionsSection {
+    width: auto;
+  }
+  #optionsControls {
+    display: none;
+  }
+
+  #textDisplay {
+    border-left: 4px solid var(--secondaryColor);
+  }
+
+  #memorisationSection.showOptions #textDisplay {
+    display: block;
+  }
+
+  #options {
+    display: none;
+  }
+
+  .textSpan {
+    line-height: 2rem;
+  }
+}
