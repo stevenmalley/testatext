@@ -3,6 +3,7 @@
 
 function openPoemSearchWindow() {
   elid("textInputSection").classList.add("showPoemSearch");
+  elid("poemSearch-author").focus();
 }
 function closePoemSearchWindow() {
   elid("textInputSection").classList.remove("showPoemSearch");

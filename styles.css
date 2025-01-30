@@ -393,16 +393,27 @@ main {
   color: white;
   background-color: var(--primaryColor);
   border-radius: 10px;
-  border: 6px solid #071025;
+  border: 3px solid #071025;
   font-size: min(1.2em, 4vw);
-  font-family: math;
+  font-family: Verdana, sans-serif;
   font-weight: bold;
   height: 55px;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+#mainButtons button, #poemSearchControls button, #lyricsSearchControls button, #optionsWindow button {
+  box-shadow: 2px 1px 2px 2px grey;
   min-width: 55px;
-  transition: background-color 0.2s;
 }
 #mainButtons button:hover, #poemSearchControls button:hover, #lyricsSearchControls button:hover, #displayControls button:hover, #optionsWindow button:hover {
   background-color: #0d204d;
+}
+#mainButtons button.cancelButton, #poemSearchControls button.cancelButton, #lyricsSearchControls button.cancelButton {
+  background-color: grey;
+  border-color: dimgrey;
+}
+#mainButtons button.cancelButton:hover, #poemSearchControls button.cancelButton:hover, #lyricsSearchControls button.cancelButton:hover {
+  background-color: dimgrey;
+  border-color: #555;
 }
 
 #revealControls button {
@@ -571,3 +582,11 @@ main {
     line-height: 2rem;
   }
 }
+
+
+
+
+/** LYRICS SEARCH TOGGLING
+#activateLyricsSearch {
+  display: none;
+} */

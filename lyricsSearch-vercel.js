@@ -3,8 +3,6 @@
 
 function openLyricsSearchWindow() {
   elid("textInputSection").classList.add("showLyricsSearch");
-  elid("lyricsSearch-query").value = "";
-  elid("lyricsSearch-query").focus();
   elid("lyricsSearchResults").textContent = "";
 }
 function closeLyricsSearchWindow() {
@@ -18,36 +16,43 @@ async function lyricsSearch(e) {
   elid("lyricsSearchResults").textContent = "searching...";
 
 
-  const query = encodeURIComponent(elid("lyricsSearch-query").value.slice(0,100).trim());
-  
+  const artist = elid("lyricsSearch-artist").value.slice(0,100).trim();
+  const title = elid("lyricsSearch-title").value.slice(0,100).trim();
 
-  if (query) {
-    let formData = new FormData();
-    formData.append("q",query);
+  let searchURL = "https://lyrist.vercel.app/api/";
 
-    const response = await fetch("./getLyrics.php",{
-      method: "POST",
-      body: formData
-    });
+  if (title) {
+
+    searchURL += encodeURIComponent(title);
+
+    if (artist) {
+      searchURL += "/"+encodeURIComponent(artist);
+    }
+
+    console.log(searchURL);
+
+    const response = await fetch(searchURL);
+
+    console.log(response);
 
     if (response) {
       const responseJSON = await response.json();
 
       console.log(responseJSON);
 
-      if (responseJSON.status === "success") {
+      if (responseJSON.lyrics) {
         let heading = "";
-        if (responseJSON.title) {
-          heading = `*${responseJSON.title}*\n\n`;
+        if (responseJSON.title || responseJSON.artist) {
+          heading = '*' + [responseJSON.title,responseJSON.artist].join(", ") + '*\n\n';
         }
 
-        elid("textInput").value = (heading+responseJSON.lyrics.trim().replaceAll(/\[.*\]\n/g,"")).slice(0,textInputLimit);
+        elid("textInput").value = (heading+responseJSON.lyrics.replaceAll(/\[.*\]\n/g,"")).slice(0,textInputLimit);
         inputUpdate();
         closeLyricsSearchWindow();
         elid("textInput").scroll(0,0);
         
       } else {
-        elid("lyricsSearchResults").textContent = responseJSON.error || "no results found";
+        elid("lyricsSearchResults").textContent = "no results found";
       }
     } else {
       elid("lyricsSearchResults").textContent = "no response from server, please try again later";

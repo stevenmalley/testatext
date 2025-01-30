@@ -38,7 +38,7 @@
               <div id="poemSearchControls" class="searchControls">
                 <div class="info">Search PoetryDB.org for poems.</div>
                 <button id="poemSearch" type="submit">Search</button>
-                <button id="poemSearchClose" type="button">Cancel</button>
+                <button id="poemSearchClose" class="cancelButton" type="button">Cancel</button>
               </div>
             </form>
             <div id="poemSearchResults" class="searchResults"></div>
@@ -49,19 +49,23 @@
           <div id="lyricsSearchWindow" class="searchWindow">
             <form onsubmit="lyricsSearch(event)">
               <div id="lyricsSearchInputs" class="searchInputs">
-                <div>
+                <!-- <div>
                   <input type="text" id="lyricsSearch-artist" name="artist" placeholder="artist" />
                   <label for="lyricsSearch-artist">artist</label>
                 </div>
                 <div>
                   <input type="text" id="lyricsSearch-title" name="title" placeholder="title" required />
                   <label for="lyricsSearch-title">title</label>
+                </div> -->
+                <div>
+                  <input type="text" id="lyricsSearch-query" name="query" placeholder="song and/or artist name" required />
+                  <label for="lyricsSearch-query">song and/or artist name</label>
                 </div>
               </div>
               <div id="lyricsSearchControls" class="searchControls">
                 <div class="info">Search for song lyrics.</div>
                 <button id="lyricsSearch" type="submit">Search</button>
-                <button id="lyricsSearchClose" type="button">Cancel</button>
+                <button id="lyricsSearchClose" class="cancelButton" type="button">Cancel</button>
               </div>
             </form>
             <div id="lyricsSearchResults" class="searchResults"></div>
