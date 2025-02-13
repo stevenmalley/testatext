@@ -31,7 +31,10 @@ async function lyricsSearch(e) {
     });
 
     if (response) {
-      const responseJSON = await response.json();
+      const responseText = await response.text();
+      console.log(responseText);
+      const responseJSON = JSON.parse(responseText);
+      //const responseJSON = await response.json();
 
       console.log(responseJSON);
 
@@ -41,7 +44,7 @@ async function lyricsSearch(e) {
           heading = `*${responseJSON.title}*\n\n`;
         }
 
-        elid("textInput").value = (heading+responseJSON.lyrics.trim().replaceAll(/\[.*\]\n/g,"")).slice(0,textInputLimit);
+        elid("textInput").value = (heading+responseJSON.lyrics.trim()).slice(0,textInputLimit);//(heading+responseJSON.lyrics.trim().replaceAll(/\[.*\]\n/g,"")).slice(0,textInputLimit);
         inputUpdate();
         closeLyricsSearchWindow();
         elid("textInput").scroll(0,0);
